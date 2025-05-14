@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ruleta de Bonos</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #111;
+      color: #fff;
+      text-align: center;
+      margin: 0;
+      padding-top: 30px;
+    }
+
+    h1 {
+      color: #ffcc00;
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    canvas {
+      margin-top: 10px;
+      background-color: #222;
+      border-radius: 50%;
+    }
+
+    button {
+      background-color: #ffcc00;
+      color: #000;
+      font-size: 18px;
+      padding: 10px 20px;
+      margin-top: 30px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #ffaa00;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎰 Ruleta de Bonos 🎁</h1>
+  <canvas id="canvas" width="400" height="400"></canvas><br>
+  <button onclick="girar()">Girar Ruleta</button>
+
+  <!-- Winwheel.js y GSAP (CDN actualizados) -->
+  <script src="https://cdn.jsdelivr.net/npm/winwheel@2.8.0/Winwheel.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+
+  <script>
+    // Crear ruleta con 5 premios
+    let ruleta = new Winwheel({
+      canvasId: 'canvas',
+      numSegments: 5,
+      outerRadius: 180,
+      textFontSize: 18,
+      segments: [
+        { fillStyle: '#ff4d4d', text: 'Bono 30%' },
+        { fillStyle: '#ff9933', text: 'Bono 50%' },
+        { fillStyle: '#33cc33', text: 'Bono 100%' },
+        { fillStyle: '#00ccff', text: 'Bono 150%' },
+        { fillStyle: '#ffcc00', text: 'Bono 200%' }
+      ],
+      animation: {
+        type: 'spinToStop',
+        duration: 5,
+        spins: 7,
+        callbackFinished: function (segmento) {
+          alert('🎉 ¡Ganaste un ' + segmento.text + '! 🎉');
+        }
+      }
+    });
+
+    // Función para girar
+    function girar() {
+      ruleta.stopAnimation(false);
+      ruleta.rotationAngle = 0;
+      ruleta.draw();
+      ruleta.startAnimation();
+    }
+  </script>
+
+</body>
+</html>

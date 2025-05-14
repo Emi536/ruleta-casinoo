@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ruleta de Premios</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script src="winwheel.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>🎁 Ruleta de la Suerte</h1>
+
+    <!-- Área de login (frontend, espera validación del backend) -->
+    <div id="loginArea">
+      <input type="text" id="username" placeholder="Usuario">
+      <input type="password" id="password" placeholder="Contraseña">
+      <button onclick="login()">Iniciar sesión</button>
+      <p id="loginError" class="oculto">Credenciales incorrectas</p>
+    </div>
+
+    <!-- Área de ruleta protegida por login -->
+    <div id="ruletaArea" class="oculto">
+      <div class="canvas-container">
+        <canvas id="ruleta" width="300" height="300"></canvas>
+      </div>
+      <button id="girar">Girar</button>
+      <div id="premio" class="premio oculto">
+        <img id="imgPremio" src="" alt="Premio">
+        <p id="textoPremio"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Login simulado (debe conectarse a backend real)
+    function login() {
+      const user = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
+
+      // Lógica temporal (reemplazar por validación con backend real via fetch)
+      if (user === "admin" && pass === "1234") {
+        document.getElementById("loginArea").classList.add("oculto");
+        document.getElementById("ruletaArea").classList.remove("oculto");
+      } else {
+        document.getElementById("loginError").classList.remove("oculto");
+      }
+    }
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ruleta de Bonos</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #121212;
+      color: #fff;
+      text-align: center;
+      padding-top: 30px;
+    }
+
+    h1 {
+      color: #ffcc00;
+    }
+
+    canvas {
+      margin-top: 20px;
+    }
+
+    button {
+      background-color: #ffcc00;
+      color: #000;
+      font-size: 18px;
+      padding: 10px 20px;
+      margin-top: 30px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #ffaa00;
+    }
+
+    #resultado {
+      margin-top: 20px;
+      font-size: 22px;
+      font-weight: bold;
+      color: #00ff99;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎰 Ruleta de Bonos 🎁</h1>
+  <canvas id="canvas" width="400" height="400"></canvas>
+  <br>
+  <button onclick="girarRuleta()">Girar Ruleta</button>
+  <div id="resultado"></div>
+
+  <!-- ✅ Librerías necesarias -->
+  <script src="https://cdn.jsdelivr.net/npm/winwheel@2.8.0/Winwheel.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+
+  <script>
+    const ruleta = new Winwheel({
+      canvasId: 'canvas',
+      numSegments: 4,
+      outerRadius: 180,
+      segments: [
+        { fillStyle: '#ff4d4d', text: 'Bono 30%' },
+        { fillStyle: '#4dd2ff', text: 'Bono 100%' },
+        { fillStyle: '#66ff66', text: 'Bono 150%' },
+        { fillStyle: '#ffcc00', text: 'Bono 200%' }
+      ],
+      animation: {
+        type: 'spinToStop',
+        duration: 5,
+        spins: 6,
+        callbackFinished: mostrarResultado
+      }
+    });
+
+    function girarRuleta() {
+      ruleta.stopAnimation(false);
+      ruleta.rotationAngle = 0;
+      ruleta.draw();
+      ruleta.startAnimation();
+      document.getElementById("resultado").innerText = '';
+    }
+
+    function mostrarResultado(segment) {
+      document.getElementById("resultado").innerText = '🎉 Premio: ' + segment.text + ' 🎉';
+    }
+  </script>
+</body>
+</html>
+
